@@ -2,6 +2,7 @@
 select
     DATE_TRUNC(questions.creation_date, MONTH) as question_month,
     questions.first_tag,
+    case when questions.accepted_answer_id is not null then 1 else null end as accepted_answer_flag,
     count(questions.id) as question_count, -- distinct superflous; unique per record
     count(questions.accepted_answer_id) as accepted_answer_count, 
     -- number of questions with accepted answers
@@ -15,5 +16,5 @@ select
     sum(questions.view_count) as view_count
 from
     {{ ref('stg_posts_questions') }} questions
-group by 1,2
-order by 1,2
+group by 1,2,3
+order by 1,2,3
