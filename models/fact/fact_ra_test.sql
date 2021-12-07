@@ -1,7 +1,7 @@
--- join and aggregate
+-- output
 select
     extract(month from questions.creation_date) as question_month,
-    questions.first_tag
+    questions.first_tag,
     count(questions.id) as question_count, -- distinct superflous; unique per record
     count(questions.accepted_answer_id) as accepted_answer_count, 
     -- number of questions with accepted answers
@@ -13,3 +13,5 @@ select
     sum(questions.view_count) as view_count
 from
     {{ ref('stg_posts_questions') }} questions
+group by 1,2
+order by 1,2
