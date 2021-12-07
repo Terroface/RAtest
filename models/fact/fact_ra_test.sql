@@ -11,6 +11,8 @@ select
     -- number of answers (accepted and not accepted ones)
     sum(questions.comment_count) as comment_count,
     sum(questions.score) as score_sum,
+    count(case when questions.score < 0 then 'negative' end) as negative_score_question_count,
+    count(case when questions.score > 0 then 'positive' end) as positive_score_question_count,
     sum(questions.view_count) as view_count
 from
     --{{ ref('stg_posts_questions') }} questions TODO get this working
